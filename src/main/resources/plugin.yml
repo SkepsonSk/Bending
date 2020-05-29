@@ -1,0 +1,17 @@
+name: Bending
+version: ${project.version}
+main: pl.trollcraft.bending.Bending
+api-version: 1.13
+authors: [JakubZelmanowicz]
+description: A simple abilities manager for AvatarServ.
+softdepend: [ProjectKorra]
+
+commands:
+  am:
+    description: Abilities Manager responsible for creating, removing abilities and granting permissions to use them.
+
+  em:
+    description: Elements Manager responsible for creating and removing elements.
+
+  bind:
+    description: A binding manager responsible for binding abilities to the slots.
