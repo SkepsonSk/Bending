@@ -54,6 +54,8 @@ public class CreatorListener implements Listener {
                 String text = msgSplit[1];
 
                 creator.getAbility().getDesc().locale(locale, text);
+                player.sendMessage(Help.color("&6" + locale + " >> " + text + " - &aok"));
+
             }
             else {
 
@@ -69,6 +71,7 @@ public class CreatorListener implements Listener {
                 String text = msgSplit[1];
 
                 creator.getElement().getDesc().locale(locale, text);
+                player.sendMessage(Help.color("&6" + locale + " >> " + text + " - &aok"));
             }
 
         }
