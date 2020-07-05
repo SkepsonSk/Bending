@@ -46,19 +46,13 @@ public class Elements {
     }
 
     public static LocalizedElement findByName(String name) {
-
-        Bukkit.getConsoleSender().sendMessage("Looking for " + name);
-
         String locale;
         for (Element e : elements) {
-
-            Bukkit.getConsoleSender().sendMessage(e.getId());
             locale = e.getName().determineLocale(name);
             if (locale != null) {
                 LocalizedElement le = new LocalizedElement(e, locale);
                 return le;
             }
-
         }
         return null;
     }

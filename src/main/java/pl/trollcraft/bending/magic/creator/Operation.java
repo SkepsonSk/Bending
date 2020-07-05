@@ -2,7 +2,6 @@ package pl.trollcraft.bending.magic.creator;
 
 public enum Operation {
 
-    LOCALE ("Ustaw jezyk."),
     NAME ("Ustaw nazwe."),
     DESC ("Ustaw opis."),
     COLORS ("Ustaw kolory.");

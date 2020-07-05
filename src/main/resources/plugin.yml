@@ -3,15 +3,35 @@ version: ${project.version}
 main: pl.trollcraft.bending.Bending
 api-version: 1.13
 authors: [JakubZelmanowicz]
-description: A simple abilities manager for AvatarServ.
-softdepend: [ProjectKorra]
+description: An abilities and titles manager for AvatarServ TrollCraft server.
+softdepend: [ProjectKorra, PlaceholderAPI, HolographicDisplays]
 
 commands:
   am:
     description: Abilities Manager responsible for creating, removing abilities and granting permissions to use them.
+    aliases: [kp]
 
   em:
     description: Elements Manager responsible for creating and removing elements.
 
+  rarity:
+    description: Rarities Manager responsible for creating and removing rarities.
+
+  title:
+    description: Titles Manager responsible for creating and removing titles.
+
   bind:
     description: A binding manager responsible for binding abilities to the slots.
+
+  clearAbilities:
+    description: Clears all bound abilities to the toolbar.
+
+  toggleBoard:
+    description: Toggles visibility of the ability board.
+
+  myTitles:
+    description: Opens a menu where a player can view and select his unlocked titles.
+    aliases: [ja, me, titles, tytuly]
+
+  closeMenu:
+    description: Closes MENU.

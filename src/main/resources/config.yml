@@ -1,0 +1,5 @@
+nametags:
+  #
+  # Shows a title above player's head.
+  #
+  enabled: true

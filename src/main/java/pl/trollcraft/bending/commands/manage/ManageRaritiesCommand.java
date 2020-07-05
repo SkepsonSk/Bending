@@ -1,4 +1,4 @@
-package pl.trollcraft.bending.commands;
+package pl.trollcraft.bending.commands.manage;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -9,39 +9,32 @@ import pl.trollcraft.bending.magic.creator.Creator;
 import pl.trollcraft.bending.magic.creator.CreatorType;
 import pl.trollcraft.bending.magic.creator.Operation;
 
-public class ManageElementsCommand implements CommandExecutor {
+public class ManageRaritiesCommand implements CommandExecutor {
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-
-        if (!sender.hasPermission("bending.elements.admin")){
-            sender.sendMessage(Help.color("&cBrak uprawnien."));
-            return true;
-        }
+    public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
 
         if (!(sender instanceof Player)) {
-            sender.sendMessage(Help.color("&cKomendy jedynie dla graczy."));
+            sender.sendMessage("Komenda jedynie dla graczy online.");
             return true;
         }
 
         if (args.length == 0) {
-            sender.sendMessage(Help.color("&7Zarzadzanie zywiolami:"));
+            sender.sendMessage(Help.color("&7Zarzadzanie rzadkosciami:"));
             sender.sendMessage("");
-            sender.sendMessage(Help.color("&e/em new <id> - &7kreator nowego zywiolu;"));
-            sender.sendMessage(Help.color("&e/em rm <id> - &7usuwanie zywiolu;"));
-            sender.sendMessage("");
+            sender.sendMessage(Help.color("&e/rarity new <id>&7 - nowa rzadkosc,"));
+            sender.sendMessage(Help.color("&e/rarity rm <id>&7 - usuwa rzadkosc."));
         }
         else {
-
-            Player player = (Player) sender;
 
             if (args[0].equalsIgnoreCase("new")) {
 
                 if (args.length != 2){
-                    sender.sendMessage(Help.color("&cUzycie: &e/em new <id>"));
+                    sender.sendMessage(Help.color("&cUzycie: &e/rarity new <id>"));
                     return true;
                 }
 
+                Player player = (Player) sender;
                 Creator creator = Creator.find(player);
 
                 if (creator != null){
@@ -50,7 +43,8 @@ public class ManageElementsCommand implements CommandExecutor {
                 }
 
                 String id = args[1];
-                creator = new Creator(id, player, CreatorType.ELEMENT);
+
+                creator = new Creator(id, player, CreatorType.RARITY);
                 creator.setOperation(Operation.NAME);
                 player.sendMessage(Help.color("&a" + creator.getOperation().message()));
 
@@ -61,5 +55,4 @@ public class ManageElementsCommand implements CommandExecutor {
 
         return true;
     }
-
 }

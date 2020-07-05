@@ -5,6 +5,10 @@ import pl.trollcraft.bending.magic.ability.Abilities;
 import pl.trollcraft.bending.magic.ability.Ability;
 import pl.trollcraft.bending.magic.element.Element;
 import pl.trollcraft.bending.magic.element.Elements;
+import pl.trollcraft.bending.magic.titles.rarity.Rarities;
+import pl.trollcraft.bending.magic.titles.rarity.Rarity;
+import pl.trollcraft.bending.magic.titles.title.Title;
+import pl.trollcraft.bending.magic.titles.title.Titles;
 
 import java.util.ArrayList;
 
@@ -19,6 +23,8 @@ public class Creator {
 
     private Element element;
     private Ability ability;
+    private Rarity rarity;
+    private Title title;
 
     // -------- -------- -------- --------
 
@@ -27,7 +33,9 @@ public class Creator {
         this.type = type;
 
         if (type == CreatorType.ABILITY) ability = new Ability(id);
-        else element = new Element(id);
+        else if (type == CreatorType.ELEMENT) element = new Element(id);
+        else if (type == CreatorType.RARITY) rarity = new Rarity(id);
+        else if (type == CreatorType.TITLE) title = new Title(id);
 
         creators.add(this);
     }
@@ -38,9 +46,17 @@ public class Creator {
             Abilities.register(ability);
             Abilities.save(ability);
         }
-        else {
+        else if (type == CreatorType.ELEMENT) {
             Elements.register(element);
             Elements.save(element);
+        }
+        else if (type == CreatorType.RARITY) {
+            Rarities.register(rarity);
+            Rarities.save(rarity);
+        }
+        else if (type == CreatorType.TITLE) {
+            Titles.register(title);
+            Titles.save(title);
         }
 
         creators.remove(this);
@@ -55,6 +71,8 @@ public class Creator {
 
     public Ability getAbility() { return ability; }
     public Element getElement() { return element; }
+    public Rarity getRarity() { return rarity; }
+    public Title getTitle() { return title; }
 
     // -------- -------- -------- --------
 

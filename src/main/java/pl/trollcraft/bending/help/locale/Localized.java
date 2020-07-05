@@ -28,10 +28,8 @@ public class Localized {
     }
 
     public String determineLocale(String text) {
-        for (Map.Entry<String, String> e : locales.entrySet() ) {
-            Bukkit.getConsoleSender().sendMessage(text + " ?= " + e.getValue());
+        for (Map.Entry<String, String> e : locales.entrySet() )
             if (e.getValue().equalsIgnoreCase(text)) return e.getKey();
-        }
         return null;
     }
 

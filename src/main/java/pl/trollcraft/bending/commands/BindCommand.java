@@ -1,10 +1,12 @@
 package pl.trollcraft.bending.commands;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import pl.trollcraft.bending.commands.element.ElementCommand;
+import pl.trollcraft.bending.events.BenderBindEvent;
 import pl.trollcraft.bending.help.Help;
 import pl.trollcraft.bending.help.KorraLinker;
 import pl.trollcraft.bending.help.locale.Localized;
@@ -72,11 +74,13 @@ public class BindCommand implements CommandExecutor {
 
             bender.getBindings().bind(slot, ability);
             if (KorraLinker.isOn())
-                KorraLinker.getInstance().bind(bender.getBindings(), bender.getName());
+                KorraLinker.getInstance().bind(slot, ability, bender.getName());
 
             Ability a = Abilities.find(ability);
             Element e = a.getElement();
             String locale = Menus.find(player).getLocale();
+
+            Bukkit.getPluginManager().callEvent(new BenderBindEvent(bender, a, slot));
 
             player.sendTitle(e.getDarkColor() + a.getName(locale),
                              new Localized()

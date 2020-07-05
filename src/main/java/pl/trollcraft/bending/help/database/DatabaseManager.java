@@ -1,18 +1,19 @@
 package pl.trollcraft.bending.help.database;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import org.redisson.api.RedissonClient;
+
+import java.sql.*;
 import java.util.function.Consumer;
 
 public class DatabaseManager {
 
     private static Database database;
+    private static RedissonClient redisson;
 
-    public static boolean init(Database database) {
+    public static boolean init(Database database, RedissonClient redisson) {
 
         DatabaseManager.database = database;
+        DatabaseManager.redisson = redisson;
 
         try {
 
@@ -36,10 +37,29 @@ public class DatabaseManager {
             abilitiesTable.append("descr text");
             abilitiesTable.append(")");
 
+            StringBuilder raritiesTable = new StringBuilder();
+            raritiesTable.append("CREATE TABLE IF NOT EXISTS bending_rarities (");
+            raritiesTable.append("id varchar(32) PRIMARY KEY,");
+            raritiesTable.append("name text,");
+            raritiesTable.append("descr text,");
+            raritiesTable.append("lightColor varchar(4),");
+            raritiesTable.append("darkColor varchar(4)");
+            raritiesTable.append(")");
+
+            StringBuilder titlesTable = new StringBuilder();
+            titlesTable.append("CREATE TABLE IF NOT EXISTS bending_titles (");
+            titlesTable.append("id varchar(32) PRIMARY KEY,");
+            titlesTable.append("name text,");
+            titlesTable.append("descr text,");
+            titlesTable.append("rarity varchar(32)");
+            titlesTable.append(")");
+
             Statement statement = conn.createStatement();
 
             statement.addBatch(elementsTable.toString());
             statement.addBatch(abilitiesTable.toString());
+            statement.addBatch(raritiesTable.toString());
+            statement.addBatch(titlesTable.toString());
             statement.executeBatch();
 
             statement.close();
@@ -77,6 +97,28 @@ public class DatabaseManager {
         return true;
     }
 
+    public static boolean exec(String sql, Consumer<PreparedStatement> call) {
+
+        try {
+
+            database.open();
+            Connection conn = database.connection();
+            conn.setAutoCommit(false);
+
+            PreparedStatement st = conn.prepareStatement(sql);
+            call.accept(st);
+            st.executeUpdate();
+            conn.commit();
+            database.close();
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            return false;
+        }
+
+        return true;
+    }
+
     public static boolean query(String sql, Consumer<ResultSet> call) {
 
         ResultSet res;
@@ -102,5 +144,9 @@ public class DatabaseManager {
 
         return true;
     }
+
+    // -------- -------- --------
+
+    public static RedissonClient getRedisson() { return redisson; }
 
 }

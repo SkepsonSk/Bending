@@ -6,7 +6,11 @@ import java.util.ArrayList;
 
 public class Menus {
 
-    public static ArrayList<Menu> menus = new ArrayList<>();
+    private static ArrayList<Menu> menus = new ArrayList<>();
+
+    public static void unregister(Menu menu) {
+        menus.remove(menu);
+    }
 
     public static Menu create(Player player, String locale) {
         Menu menu = new Menu(player, locale);

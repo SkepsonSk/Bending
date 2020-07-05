@@ -1,4 +1,4 @@
-package pl.trollcraft.bending.commands;
+package pl.trollcraft.bending.commands.manage;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -40,8 +40,6 @@ public class ManageAbilitiesCommand implements CommandExecutor {
             sender.sendMessage(Help.color("&e/am remove <gracz> <id> - &7usun ruch;"));
             //sender.sendMessage(Help.color("&e/am addall <gracz> <zywiol> <id> - &7dodaj wszystkie ruchy;"));
             //sender.sendMessage(Help.color("&e/am removeall <gracz> <zywiol> <id> - &7usun wszystkie ruchy;"));
-            sender.sendMessage("");
-            sender.sendMessage("&7a - ruch, e - zywiol.");
         }
         else {
 
